@@ -24,13 +24,25 @@ para decidir al ganador del mismo.
 - Copiar archivo .env.example a .env
 
 **La solución funciona con Laravel Sail, por lo que está dockerizada. Los siguientes comandos se ajustan a dicha configuración:**
+- Instalar dependencias para ejecutar sail:
+```
+docker run --rm --interactive --tty -v $(pwd):/app composer install
+```
+- Setear los datos de conexión a la base de datos:
+```
+    DB_CONNECTION=mysql
+    DB_HOST=mysql
+    DB_PORT=3306
+    DB_DATABASE=tenis_tournament
+    DB_USERNAME=sail
+    DB_PASSWORD=password
+```
 - Levantar el container:
 ```
-./vendor/bin/sail up
+./vendor/bin/sail up --build
 ```
 - Instalar dependencias:
 ```
-./vendor/bin/sail composer install
 ./vendor/bin/sail npm install
 ```
 - Generar llaves:
