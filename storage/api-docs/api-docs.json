@@ -1,0 +1,201 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tenis Tournament",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/tournaments": {
+            "get": {
+                "tags": [
+                    "Tournaments"
+                ],
+                "summary": "Lista y filtra Torneos",
+                "operationId": "a0af96331abdd469669a75dc3f1ac551",
+                "parameters": [
+                    {
+                        "name": "tournament_name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de Torneo",
+                        "required": false
+                    },
+                    {
+                        "name": "tournament_type",
+                        "in": "query",
+                        "description": "Filtrar por Tipo de torneo (masculino o femenino)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "season",
+                        "in": "query",
+                        "description": "Filtrar por temporada",
+                        "required": false
+                    },
+                    {
+                        "name": "winner",
+                        "in": "query",
+                        "description": "Filtrar por ganador",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list with tournaments"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tournaments"
+                ],
+                "summary": "Crea un nuevo torneo",
+                "description": "Crea un nuevo torneo y devuelve al ganador.",
+                "operationId": "a90a6d2c6657fd5e1ecf9c6536c0dba5",
+                "requestBody": {
+                    "description": "Datos del nuevo torneo",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tournament_type",
+                                    "tournament_date",
+                                    "tournament_name",
+                                    "season",
+                                    "players"
+                                ],
+                                "properties": {
+                                    "tournament_type": {
+                                        "description": "Tipo de torneo (masculino o femenino)",
+                                        "type": "string",
+                                        "enum": [
+                                            "male",
+                                            "female"
+                                        ]
+                                    },
+                                    "tournament_date": {
+                                        "description": "Fecha del torneo (YYYY-MM-DD)",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "tournament_name": {
+                                        "description": "Nombre del torneo",
+                                        "type": "string"
+                                    },
+                                    "season": {
+                                        "description": "Año de la temporada del torneo",
+                                        "type": "integer"
+                                    },
+                                    "players": {
+                                        "description": "Lista de jugadores participantes",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "name",
+                                                "skill",
+                                                "speed",
+                                                "strength",
+                                                "reaction"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "description": "Nombre del jugador",
+                                                    "type": "string"
+                                                },
+                                                "skill": {
+                                                    "description": "Nivel de habilidad del jugador",
+                                                    "type": "integer"
+                                                },
+                                                "speed": {
+                                                    "description": "Velocidad de desplazamiento del jugador",
+                                                    "type": "integer"
+                                                },
+                                                "strength": {
+                                                    "description": "Fuerza del jugador",
+                                                    "type": "integer"
+                                                },
+                                                "reaction": {
+                                                    "description": "Tiempo de reacción del jugador",
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "examples": {
+                                "Crear Torneo": {
+                                    "summary": "Crear Torneo",
+                                    "value": {
+                                        "tournament_type": "male",
+                                        "tournament_date": "2024-12-26",
+                                        "tournament_name": "Wimbledon",
+                                        "season": 2025,
+                                        "players": [
+                                            {
+                                                "name": "Player 1",
+                                                "skill": 46,
+                                                "speed": 54,
+                                                "strength": 79,
+                                                "reaction": 60
+                                            },
+                                            {
+                                                "name": "Player 2",
+                                                "skill": 45,
+                                                "speed": 70,
+                                                "strength": 69,
+                                                "reaction": 50
+                                            },
+                                            {
+                                                "name": "Player 3",
+                                                "skill": 48,
+                                                "speed": 65,
+                                                "strength": 75,
+                                                "reaction": 50
+                                            },
+                                            {
+                                                "name": "Player 4",
+                                                "skill": 49,
+                                                "speed": 67,
+                                                "strength": 72,
+                                                "reaction": 50
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Torneo creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error de validación de datos"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        }
+    }
+}
